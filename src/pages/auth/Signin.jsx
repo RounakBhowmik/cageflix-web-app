@@ -1,25 +1,44 @@
 import React from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
-import Footer from "../components/Footer";
-import "../styles/LoginPage.css";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { Link } from "react-router";
+import "../../styles/Auth.css"
 
-const LoginPage = () => {
+const Signin = () => {
+  const user_signin_schema = yup.object({
+    email: yup.string().email().required('Plese enter the email address'),
+    password: yup.string().required('Plese enter the password'),
+  });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(user_signin_schema)
+  });
+  const onSubmit = (data) => console.log(data)
   return (
     <div className="login-page">
       <div className="overlay d-flex flex-column justify-content-between">
         <div className="flex-grow-1 d-flex justify-content-center align-items-center">
           <Card className="p-4 login-card">
             <h2 className="text-white mb-4 text-center">Sign In</h2>
-            <Form>
+            <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Control
                   type="email"
                   placeholder="Email or mobile number"
+                  {...register("email")}
                 />
+                <ErrorMessage message={errors.email?.message} />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" {...register("password")} />
+                <ErrorMessage message={errors.password?.message} />
               </Form.Group>
 
               <Button variant="danger" type="submit" className="w-100 mb-2">
@@ -41,9 +60,9 @@ const LoginPage = () => {
 
               <div className="mt-4 text-white text-center">
                 New to Netflix?{" "}
-                <a href="#" className="text-white fw-bold">
+                <Link to='/signup' className="text-white fw-bold">
                   Sign up now
-                </a>
+                </Link>
                 .
               </div>
               {/* <div className="mt-2 text-white small text-center">
@@ -56,11 +75,9 @@ const LoginPage = () => {
             </Form>
           </Card>
         </div>
-
-        <Footer />
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default Signin;

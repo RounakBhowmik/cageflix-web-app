@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Dropdown, DropdownButton } from "react-bootstrap";
-import "../styles/Footer.css";
+import "../../styles/Footer.css";
 
 const Footer = () => (
   <footer className="text-white py-4 footer-container">
