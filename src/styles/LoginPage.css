@@ -1,0 +1,35 @@
+.login-page {
+  background-image: url('/dummy-bg.jpg'); /* Use your actual background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Semi-transparent overlay over background */
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Login card styling */
+.login-card {
+  background-color: rgba(0, 0, 0, 0.75);
+  border: none;
+  width: 100%;
+  max-width: 350px;
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-card {
+    margin: 0 1rem;
+  }
+
+}
