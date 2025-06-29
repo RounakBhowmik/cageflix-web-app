@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
+import { has, isEmpty } from "lodash";
 import * as yup from "yup"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { Link } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "../../shared/services/auth";
 import "../../styles/Auth.css"
 
 const Signin = () => {
@@ -16,10 +19,28 @@ const Signin = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm({
     resolver: yupResolver(user_signin_schema)
   });
-  const onSubmit = (data) => console.log(data)
+  const mutation = useMutation({
+    mutationFn: async (postData) => {
+      return await signIn(postData);
+    }
+  })
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  }
+
+  useEffect(() => {
+  if (mutation.isError && has(mutation.error, 'error') && !isEmpty(mutation.error.error)) {
+    const { error } = mutation.error;
+    for (let key in error) {
+      setError(key, { message: error[key] });
+    }
+  }
+}, [mutation.isError, mutation.error, setError]);
+
   return (
     <div className="login-page">
       <div className="overlay d-flex flex-column justify-content-between">
@@ -40,7 +61,7 @@ const Signin = () => {
                 <Form.Control type="password" placeholder="Password" {...register("password")} />
                 <ErrorMessage message={errors.password?.message} />
               </Form.Group>
-
+              <ErrorMessage message={errors.message?.message} />
               <Button variant="danger" type="submit" className="w-100 mb-2">
                 Sign In
               </Button>
