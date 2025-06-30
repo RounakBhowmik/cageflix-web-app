@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import Signin from '../pages/auth/Signin';
 import Signup from '../pages/auth/Signup';
 import Layout from '../components/layout/Layout';
+import Home from '../pages/home/Home';
 const AppRoutes = () => {
     const authRoutes = [
         {
@@ -13,6 +14,11 @@ const AppRoutes = () => {
             name: "Signup",
             path: "/signup",
             element: <Signup />,
+        },
+        {
+            name: "Home",
+            path: "/",
+            element: <Home />
         },
     ]
     return (

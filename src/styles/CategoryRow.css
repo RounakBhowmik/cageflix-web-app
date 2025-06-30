@@ -1,0 +1,58 @@
+.category-row {
+  padding: 10px 30px;
+  background-color: rgb(237, 80, 80);
+  color: #fff;
+}
+
+.category-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.thumbnail {
+  position: relative;
+  padding: 4px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.thumbnail-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.tag-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: red;
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .thumbnail-img {
+    height: 160px;
+  }
+
+  .category-title {
+    font-size: 1.1rem;
+  }
+}
+
+
+.slick-prev,
+.slick-next {
+  z-index: 2;
+}
+
+
+
