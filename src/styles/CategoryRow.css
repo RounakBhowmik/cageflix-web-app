@@ -37,7 +37,11 @@
   border-radius: 4px;
   font-weight: bold;
 }
+.carousel-slider {
+   max-width: 100vh;
+  margin: 0 auto;
 
+}
 @media (max-width: 768px) {
   .thumbnail-img {
     height: 160px;
@@ -53,6 +57,7 @@
 .slick-next {
   z-index: 2;
 }
+
 
 
 
