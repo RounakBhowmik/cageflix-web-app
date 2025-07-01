@@ -3,6 +3,8 @@ import Signin from '../pages/auth/Signin';
 import Signup from '../pages/auth/Signup';
 import Layout from '../components/layout/Layout';
 import Home from '../pages/home/Home';
+import DetailsPage from '../pages/detailsShow/DetailsPage';
+
 const AppRoutes = () => {
     const authRoutes = [
         {
@@ -19,6 +21,11 @@ const AppRoutes = () => {
             name: "Home",
             path: "/",
             element: <Home />
+        },
+        {
+            name: "DetailsPage",
+            path: "/details",
+            element: <DetailsPage />
         },
     ]
     return (

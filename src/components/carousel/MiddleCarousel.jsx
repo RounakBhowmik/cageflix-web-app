@@ -17,18 +17,17 @@ const trending = [
       "https://media-cache.cinematerial.com/p/500x/u4qc80tc/jaat-indian-movie-poster.jpg?v=1737810390",
   },
   {
-    image:
-      "https://media-cache.cinematerial.com/p/500x/5asumnqr/aghathiyaa-indian-movie-poster.jpg?v=1740601669",
+    image: "https://image.tmdb.org/t/p/w500/vqBmyAj0Xm9LnS1xe1MSlMAJyHq.jpg",
   },
   {
-    image:
-      "https://media-cache.cinematerial.com/p/500x/5asumnqr/aghathiyaa-indian-movie-poster.jpg?v=1740601669",
-  },
-  {
-    image:
-      "https://media-cache.cinematerial.com/p/500x/5asumnqr/aghathiyaa-indian-movie-poster.jpg?v=1740601669",
+    image: "https://image.tmdb.org/t/p/w500/mKp4euM5Cv3m2U1Vmby3OGwcD5y.jpg",
   },
   { image: "https://image.tmdb.org/t/p/w500/1QdXdRYfktUSONkl1oD5gc6Be0s.jpg" },
+  {
+    image:
+      "https://media-cache.cinematerial.com/p/500x/5asumnqr/aghathiyaa-indian-movie-poster.jpg?v=1740601669",
+  },
+
   { image: "https://image.tmdb.org/t/p/w500/1QdXdRYfktUSONkl1oD5gc6Be0s.jpg" },
   { image: "https://image.tmdb.org/t/p/w500/1QdXdRYfktUSONkl1oD5gc6Be0s.jpg" },
   { image: "https://image.tmdb.org/t/p/w500/1QdXdRYfktUSONkl1oD5gc6Be0s.jpg" },

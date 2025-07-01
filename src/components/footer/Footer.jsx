@@ -3,46 +3,31 @@ import { Container, Row, Col, Dropdown, DropdownButton } from "react-bootstrap";
 import "../../styles/Footer.css";
 
 const Footer = () => (
-  <footer className="text-white py-4 footer-container">
+  <footer className="footer-container text-white">
     <Container>
-      <p className="mb-3">Questions? Call 000-800-919-1743 (Toll-Free)</p>
-      <Row>
-        <Col xs={6} md={3}>
-          <a href="#" className="text-white d-block mb-2">
-            FAQ
-          </a>
-        </Col>
-        <Col xs={6} md={3}>
-          <a href="#" className="text-white d-block mb-2">
-            Help Centre
-          </a>
-        </Col>
-        <Col xs={6} md={3}>
-          <a href="#" className="text-white d-block mb-2">
-            Terms of Use
-          </a>
-        </Col>
-        <Col xs={6} md={3}>
-          <a href="#" className="text-white d-block mb-2">
-            Privacy
-          </a>
-        </Col>
-        <Col xs={6} md={3}>
-          <a href="#" className="text-white d-block mb-2">
-            Cookie Preferences
-          </a>
-        </Col>
-        <Col xs={6} md={3}>
-          <a href="#" className="text-white d-block mb-2">
-            Corporate Information
-          </a>
-        </Col>
+      <p className="footer-contact mb-4">Questions? Call 000-800-919-1743 (Toll-Free)</p>
+      <Row className="footer-links">
+        {[
+          "FAQ",
+          "Help Centre",
+          "Terms of Use",
+          "Privacy",
+          "Cookie Preferences",
+          "Corporate Information",
+        ].map((text, idx) => (
+          <Col xs={6} sm={4} md={3} key={idx}>
+            <a href="#" className="footer-link">
+              {text}
+            </a>
+          </Col>
+        ))}
       </Row>
-      <div className="mt-3">
+      <div className="footer-language mt-4">
         <DropdownButton
           id="dropdown-language"
-          title="⚛ English"
-          variant="secondary"
+          title="🌐 English"
+          variant="outline-light"
+          size="sm"
         >
           <Dropdown.Item href="#">English</Dropdown.Item>
           <Dropdown.Item href="#">Hindi</Dropdown.Item>

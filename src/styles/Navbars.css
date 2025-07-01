@@ -1,11 +1,7 @@
 .netflix-navbar {
-  background-color: black;
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  background-color: #000;
+  width: 100%;
+  z-index: 1050;
 }
 
 .netflix-navbar .nav-link {
@@ -16,7 +12,6 @@
 
 .netflix-navbar .nav-link.active {
   font-weight: bold;
-  /* border-bottom: 2px solid white; */
 }
 
 .netflix-navbar .nav-link:hover {
@@ -28,6 +23,7 @@
   width: 32px;
   height: 32px;
   border-radius: 4px;
+  object-fit: cover;
   cursor: pointer;
 }
 
@@ -44,4 +40,20 @@
   font-size: 0.65rem;
   padding: 2px 6px;
   border-radius: 50%;
+  font-weight: bold;
+}
+
+.offcanvas-body .nav-link {
+  color: white !important;
+}
+
+@media (max-width: 992px) {
+  .profile-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .netflix-navbar .nav-link {
+    font-size: 0.9rem;
+  }
 }
