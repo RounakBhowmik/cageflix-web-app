@@ -11,3 +11,15 @@ export const signIn = async (postData) => {
         return Promise.reject(err.data);
     });
 };
+
+export const signUp = async (postData) => {
+    return await AppService({
+        url: "/auth/signup",
+        method: "POST",
+        data: postData
+    }).then((data) => {
+        return Promise.resolve(data);
+    }).catch((err) => {
+        return Promise.reject(err.data);
+    });
+};

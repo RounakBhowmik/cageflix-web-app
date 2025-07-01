@@ -1,12 +1,15 @@
 // src/pages/SignupPage.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { signUp } from "../../shared/services/auth";
 import "../../styles/Auth.css";
+import { has, isEmpty } from "lodash";
 
 
 const Signup = () => {
@@ -20,10 +23,26 @@ const Signup = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setError
   } = useForm({
     resolver: yupResolver(user_signup_schema)
   });
-  const onSubmit = (data) => console.log(data)
+  const mutation = useMutation({
+    mutationFn: async (postData) => {
+      return await signUp(postData);
+    }
+  });
+  useEffect(() => {
+    if (mutation.isError && has(mutation.error, 'error') && !isEmpty(mutation.error.error)) {
+      const { error } = mutation.error;
+      for (let key in error) {
+        setError(key, { message: error[key] })
+      }
+    }
+  }, [mutation.isError, mutation.error, setError]);
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  }
   return (
     <div className="login-page">
       <div className="overlay d-flex flex-column justify-content-between">

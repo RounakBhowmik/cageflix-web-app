@@ -33,13 +33,13 @@ const Signin = () => {
   }
 
   useEffect(() => {
-  if (mutation.isError && has(mutation.error, 'error') && !isEmpty(mutation.error.error)) {
-    const { error } = mutation.error;
-    for (let key in error) {
-      setError(key, { message: error[key] });
+    if (mutation.isError && has(mutation.error, 'error') && !isEmpty(mutation.error.error)) {
+      const { error } = mutation.error;
+      for (let key in error) {
+        setError(key, { message: error[key] });
+      }
     }
-  }
-}, [mutation.isError, mutation.error, setError]);
+  }, [mutation.isError, mutation.error, setError]);
 
   return (
     <div className="login-page">
@@ -62,8 +62,8 @@ const Signin = () => {
                 <ErrorMessage message={errors.password?.message} />
               </Form.Group>
               <ErrorMessage message={errors.message?.message} />
-              <Button variant="danger" type="submit" className="w-100 mb-2">
-                Sign In
+              <Button variant="danger" type="submit" className="w-100 mb-2" disabled={mutation.isPending}>
+                {mutation.isPending ? "Sign In ..." : "Sign In"}
               </Button>
 
               <div className="text-center text-white mb-2">OR</div>
