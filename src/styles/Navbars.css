@@ -2,6 +2,30 @@
   background-color: #000;
   width: 100%;
   z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+.netflix-navbar .navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.netflix-navbar .navbar-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.netflix-navbar .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .netflix-navbar .nav-link {
@@ -47,13 +71,74 @@
   color: white !important;
 }
 
+.netflix-navbar .search-box {
+  background: #181818;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #fff;
+  padding: 4px 12px;
+  font-size: 0.95rem;
+  outline: none;
+  margin-left: 10px;
+  width: 180px;
+  transition: width 0.3s;
+}
+
+.netflix-navbar .search-box:focus {
+  width: 240px;
+  border-color: #b3b3b3;
+}
+
+.netflix-navbar .nav-link,
+.netflix-navbar .search-box,
+.netflix-navbar .navbar-right,
+.netflix-navbar .navbar-left,
+.netflix-navbar .profile-icon,
+.netflix-navbar .notification-badge,
+.netflix-navbar .dropdown-item,
+.netflix-navbar .dropdown-toggle,
+.netflix-navbar .dropdown-menu,
+.netflix-navbar .navbar-brand {
+  cursor: pointer;
+}
+
+/* For fuzzy search results dropdown */
+.netflix-navbar .fuzzy-result-item {
+  cursor: pointer;
+}
+
 @media (max-width: 992px) {
+  .netflix-navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem 0.5rem;
+  }
+  .netflix-navbar .navbar-center {
+    margin: 0.5rem 0;
+  }
+  .netflix-navbar .search-box {
+    width: 100%;
+    max-width: 100vw;
+    margin: 0.5rem 0 0 0;
+  }
   .profile-icon {
     width: 28px;
     height: 28px;
   }
-
   .netflix-navbar .nav-link {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .netflix-navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.3rem 0.2rem;
+  }
+  .netflix-navbar .search-box {
+    width: 100%;
+    margin: 0.3rem 0 0 0;
     font-size: 0.9rem;
   }
 }

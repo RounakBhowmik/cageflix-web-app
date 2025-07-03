@@ -21,8 +21,14 @@ const fuseOptions = {
 
 const fuseInstance = new Fuse(movies, fuseOptions);
 
-const query = "Foarst";
-export const results = fuseInstance.search(query).map(result => result.item);
+export function searchMovies(query) {
+  if (!query || !query.trim()) return [];
+  return fuseInstance.search(query).map(result => result.item);
+}
+
+// Example usage:
+// import { searchMovies } from './fuzzy';
+// const results = searchMovies('Foarst');
 
 
 

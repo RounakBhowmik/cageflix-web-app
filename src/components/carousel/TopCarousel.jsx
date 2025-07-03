@@ -2,41 +2,43 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "../../styles/TopCarousel.css";
 
-const products = [
-  {
-    id: 1,
-    image: "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg",
-    movie_name: "abcd",
-  },
-  {
-    id: 2,
-    image: "https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg",
-    movie_name: "efgh",
-  },
-  {
-    id: 3,
-    image: "https://images.pexels.com/photos/906150/pexels-photo-906150.jpeg",
-    movie_name: "ijkl",
-  },
-  {
-    id: 4,
-    image: "https://images.pexels.com/photos/135940/pexels-photo-135940.jpeg",
-    movie_name: "mnop",
-  },
-];
+const TopCarousel = ({ movies = [], tvshows = [] }) => {
+  
+  // Get first 2 movies and first 2 tvshows
+  const movieSlides = (movies.results || [])
+    .slice(0, 2)
+    .map((item, idx) => ({
+      id: `movie-${item.id || idx}`,
+      image: item.image || item.poster_path || item.backdrop_path || "",
+      name: item.title || item.name || item.movie_name || "",
+      type: "Movie",
+    }));
+  const tvSlides = (tvshows.results || [])
+    .slice(0, 2)
+    .map((item, idx) => ({
+      id: `tv-${item.id || idx}`,
+      image: item.image || item.poster_path || item.backdrop_path || "",
+      name: item.title || item.name || item.movie_name || "",
+      type: "TV Show",
+    }));
+  const slides = [...movieSlides, ...tvSlides];
 
-const TopCarousel = () => {
   return (
     <Carousel className="top-carousel" indicators={false}>
-      {products.map((item) => (
+      {slides.map((item) => (
         <Carousel.Item key={item.id}>
           <img
             className="top-carousel-img"
-            src={item.image}
-            alt={`Slide ${item.id}`}
+            src={"https://image.tmdb.org/t/p/w500"+item.image}
+            alt={item.name}
           />
           <Carousel.Caption>
-            <h1>{item.movie_name}</h1>
+            <h1>
+              {item.name}{" "}
+              <span
+                style={{ fontSize: "1rem", fontWeight: 400 }}
+              >{`(${item.type})`}</span>
+            </h1>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
