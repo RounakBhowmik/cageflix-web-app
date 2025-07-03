@@ -61,6 +61,26 @@
   color: #b3b3b3 !important;
 }
 
+.clamp-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.clamp-overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .custom-card {
     max-width: 98vw;

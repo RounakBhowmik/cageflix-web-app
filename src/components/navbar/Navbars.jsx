@@ -6,8 +6,10 @@ import Dropdowns from '../dropdown/Dropdowns';
 import { searchMovies } from '../../fuzzy.js';
 import { Link } from "react-router";
 
-const Navbars = () => {
+const Navbars = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
+  console.log(props);
+  
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = (e) => {
