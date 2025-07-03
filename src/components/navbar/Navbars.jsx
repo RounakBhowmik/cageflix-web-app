@@ -4,6 +4,7 @@ import '../../styles/Navbars.css';
 import { FaBell } from 'react-icons/fa';
 import Dropdowns from '../dropdown/Dropdowns';
 import { searchMovies } from '../../fuzzy.js';
+import { Link } from "react-router";
 
 const Navbars = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,9 +43,11 @@ const Navbars = () => {
             <Offcanvas.Body>
               <div className="navbar-left d-flex align-items-center gap-3 flex-grow-1">
                 <Nav className="me-auto d-flex align-items-center gap-2">
-                  <Nav.Link href="#" active className="nav-link">
-                    Home
-                  </Nav.Link>
+                  
+                    <Link to='/' className="nav-link">
+                  Home
+                </Link>
+                 
                   <Nav.Link href="#" className="nav-link">
                     <Dropdowns />
                   </Nav.Link>

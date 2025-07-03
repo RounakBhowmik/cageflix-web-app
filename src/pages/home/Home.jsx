@@ -17,7 +17,7 @@ const { isPending: isTvLoading, error: tvError, data: tvshows } = useQuery({
   queryFn: getPopularTvShows,
 });
 
-  if (isMoviesLoading || isTvLoading) return 'Loading...';
+  if (isMoviesLoading || isTvLoading) return <Loader /> ;
 
   if (moviesError) return 'An error has occurred: ' + moviesError.message;
   if (tvError) return 'An error has occurred: ' + tvError.message;
@@ -27,7 +27,7 @@ const { isPending: isTvLoading, error: tvError, data: tvshows } = useQuery({
   return <div>
     <TopCarousel movies={movies} tvshows={tvshows}/>
     <MiddleCarousel  movies={movies} tvshows={tvshows} />
-    {/* <Loader /> */}
+    
   </div>;
   };
 
