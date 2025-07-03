@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
 import '../../styles/Navbars.css';
 import { FaSearch, FaBell } from 'react-icons/fa';
-
+import Dropdowns from '../dropdown/Dropdowns';
 const Navbars = () => {
   return (
     <>
@@ -29,9 +29,7 @@ const Navbars = () => {
                 <Nav.Link href="#" active>
                   Home
                 </Nav.Link>
-                <Nav.Link href="#">TV Shows</Nav.Link>
-                <Nav.Link href="#">Movies</Nav.Link>
-                <Nav.Link href="#">My List</Nav.Link>
+                <Nav.Link href="#"><Dropdowns /></Nav.Link>
               </Nav>
 
               <div className="d-flex align-items-center gap-3 mt-3 mt-lg-0 justify-content-center justify-content-lg-end">
