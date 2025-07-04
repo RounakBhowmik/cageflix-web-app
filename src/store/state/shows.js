@@ -8,7 +8,7 @@ export const showsIntialState = {
     },
     genre: {
         name: "",
-        value: ''
+        value: -1
     }
 
 };

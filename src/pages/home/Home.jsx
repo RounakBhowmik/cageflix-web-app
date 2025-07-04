@@ -3,7 +3,7 @@ import TopCarousel from "../../components/carousel/TopCarousel";
 import MiddleCarousel from "../../components/carousel/MiddleCarousel";
 import { useQuery } from '@tanstack/react-query';
 import Loader from "../../components/commonLoader/Loader";
-import { getPopularMovies, getPopularTvShows } from "../../shared/services/shows";
+import { getMoviesByGenre, getPopularMovies, getPopularTvShows, getTvShowsByGenre } from "../../shared/services/shows";
 import { fetchShows } from "../../store/actions/shows";
 import { AppContext } from "../../store/AppProvider";
 
@@ -12,13 +12,21 @@ const Home = () => {
   const { shows } = appCtx;
   const { isPending: isMoviesLoading, error: moviesError, data: movies, refetch: moviesRefetch } = useQuery({
     queryKey: ['popularMovies', shows?.state?.genre?.value],
-    queryFn: async () => { return await getPopularMovies(shows?.state?.genre?.value  && { with_genres: shows?.state?.genre?.value }) },
+    queryFn: async () => { 
+      if(shows?.state?.genre?.value != -1) {
+        return await getMoviesByGenre({ with_genres: shows?.state?.genre?.value })
+      }
+      return await getPopularMovies();
+     },
   });
 
   const { isPending: isTvLoading, error: tvError, data: tvShows, refetch: tvShowsRefetch } = useQuery({
     queryKey: ['popularTvShows', shows?.state?.genre?.value],
-    queryFn: async () => { 
-      return await getPopularTvShows(shows?.state?.genre?.value  && { with_genres: shows?.state?.genre?.value })
+    queryFn: async () => {       
+      if(shows?.state?.genre?.value != -1) {
+        return await getTvShowsByGenre({ with_genres: shows?.state?.genre?.value })
+      }
+      return await getPopularTvShows();
     },
   });
 
