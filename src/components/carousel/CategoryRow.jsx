@@ -65,16 +65,20 @@ const CategoryRow = ({ title, data, onClick }) => {
               ))}
             </Slider>)
             : (
-              <div
-                className="thumbnail"
-                onClick={() => onClick(data[0])}
-                style={{ cursor: "pointer" }}
-              >
-                <img
-                  src={"https://image.tmdb.org/t/p/w500" + data[0].poster_path}
-                  className="thumbnail-img"
-                />
-                {data[0].tag && <span className="tag-label">{data[0].tag}</span>}
+              
+              <div className="single-thumbnail-container">
+                <div
+                  className="thumbnail"
+                  onClick={() => onClick(data[0])}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={"https://image.tmdb.org/t/p/w500" + data[0].poster_path}
+                    alt={`thumb-0`}
+                    className="thumbnail-img"
+                  />
+                  {data[0].tag && <span className="tag-label">{data[0].tag}</span>}
+                </div>
               </div>
             )
         }

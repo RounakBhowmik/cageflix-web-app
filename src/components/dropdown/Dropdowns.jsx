@@ -48,105 +48,35 @@ const Dropdowns = ({ data }) => {
         >
           <div style={{ display: "flex", gap: "6px", minWidth: "180px" }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              {data != undefined && data.genres.slice(0, 4).map((ele, key) => (
+                <Dropdown.Item
+                  style={{
+                    color: "#fff",
+                    padding: "4px 10px",
+                    margin: 0,
+                    background: "#181818"
+                  }}
+                  eventKey={JSON.stringify({ name: ele.name, id: ele.id })}
+                  key={key}
+                  onClick={() => setSelectedGenre(ele.name)}
+                  className="custom-dropdown-item"
+                >
+                  {ele.name}
+                </Dropdown.Item>
+              ))}
               <Dropdown.Item
                 style={{
                   color: "#fff",
                   padding: "4px 10px",
                   margin: 0,
+                  background: "#181818"
                 }}
                 eventKey={JSON.stringify({ name: "Genres", id: -1 })}
                 onClick={() => setSelectedGenre("Genres")}
+                className="custom-dropdown-item"
               >
                 Genres
               </Dropdown.Item>
-              {
-                data != undefined && data.genres.slice(0, 4).map((ele, key) => (
-                  <Dropdown.Item
-                    style={{
-                      color: "#fff",
-                      padding: "4px 10px",
-                      margin: 0,
-                    }}
-                    eventKey={JSON.stringify({ name: ele.name, id: ele.id })}
-                    key={key}
-                    onClick={() => setSelectedGenre(ele.name)}
-                  >
-                    {ele.name}
-                  </Dropdown.Item>
-                ))
-              }
-              {/* <Dropdown.Item
-                href="#/action-2"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Another action
-              </Dropdown.Item>
-              <Dropdown.Item
-                href="#/action-2"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Another action
-              </Dropdown.Item>
-              <Dropdown.Item
-                href="#/action-2"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Another action
-              </Dropdown.Item>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-              <Dropdown.Item
-                href="#/action-3"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Something else
-              </Dropdown.Item>
-              <Dropdown.Item
-                href="#/action-4"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Fourth action
-              </Dropdown.Item>
-              <Dropdown.Item
-                href="#/action-4"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Fourth action
-              </Dropdown.Item>
-              <Dropdown.Item
-                href="#/action-4"
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                }}
-              >
-                Fourth action
-              </Dropdown.Item> */}
             </div>
           </div>
         </Dropdown.Menu>

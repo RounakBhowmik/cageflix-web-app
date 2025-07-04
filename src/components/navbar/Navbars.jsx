@@ -63,7 +63,9 @@ const Navbars = () => {
       <Navbar expand="lg" className="netflix-navbar fixed-top" variant="dark">
         <Container fluid>
           <Navbar.Brand href="#" className="text-danger fw-bold">
-            CAGEFLIX
+            <Link to='/' className="nav-link">
+                    CAGEFLIX
+                  </Link>
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="navbar-responsive" />
@@ -75,7 +77,10 @@ const Navbars = () => {
           >
             <Offcanvas.Header closeButton className="text-white border-bottom border-secondary">
               <Offcanvas.Title id="navbar-label" className="text-danger fw-bold">
-                CAGEFLIX
+          
+                <Link to='/' className="nav-link">
+                    CAGEFLIX
+                  </Link>
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
@@ -103,7 +108,6 @@ const Navbars = () => {
                 <FaBell className="text-white cursor-pointer position-relative" style={{ fontSize: '1.2rem' }}>
                   <span className="notification-badge">3</span>
                 </FaBell>
-                <img src="/profile.jpg" alt="Profile" className="profile-icon" />
               </div>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
