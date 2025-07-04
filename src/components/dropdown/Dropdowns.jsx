@@ -1,10 +1,19 @@
-import React from "react";
+import { isEmpty, isUndefined } from "lodash";
+import { useContext, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import { AppContext } from "../../store/AppProvider";
+import { fetchShowsByGenre } from "../../store/actions/shows";
 
-const Dropdowns = () => {
+const Dropdowns = ({ data }) => {
+  const appCtx = useContext(AppContext);
+  const { shows } = appCtx;
+  const [selectedGenre, setSelectedGenre] = useState("Genres");
+  const onGenreSelect = (id) => {
+    fetchShowsByGenre({ name: selectedGenre, value: id }, shows.dispatch);
+  }
   return (
     <div>
-      <Dropdown className="custom-dropdown">
+      <Dropdown className="custom-dropdown" onSelect={onGenreSelect}>
         <Dropdown.Toggle
           id="dropdown-basic"
           style={{
@@ -19,7 +28,7 @@ const Dropdowns = () => {
             minWidth: 90,
           }}
         >
-          Genres
+          {selectedGenre}
         </Dropdown.Toggle>
 
         <Dropdown.Menu
@@ -35,16 +44,33 @@ const Dropdowns = () => {
           <div style={{ display: "flex", gap: "6px", minWidth: "180px" }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
               <Dropdown.Item
-                href="#/action-1"
                 style={{
                   color: "#fff",
                   padding: "4px 10px",
                   margin: 0,
                 }}
+                eventKey={-1}
+                onClick={() => setSelectedGenre("Genres")}
               >
-                Action
+                Genres
               </Dropdown.Item>
-              <Dropdown.Item
+              {
+                data != undefined && data.genres.slice(0, 4).map((ele, key) => (
+                  <Dropdown.Item
+                    style={{
+                      color: "#fff",
+                      padding: "4px 10px",
+                      margin: 0,
+                    }}
+                    eventKey={ele.id}
+                    key={key}
+                    onClick={() => setSelectedGenre(ele.name)}
+                  >
+                    {ele.name}
+                  </Dropdown.Item>
+                ))
+              }
+              {/* <Dropdown.Item
                 href="#/action-2"
                 style={{
                   color: "#fff",
@@ -115,7 +141,7 @@ const Dropdowns = () => {
                 }}
               >
                 Fourth action
-              </Dropdown.Item>
+              </Dropdown.Item> */}
             </div>
           </div>
         </Dropdown.Menu>

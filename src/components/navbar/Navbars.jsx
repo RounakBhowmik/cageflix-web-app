@@ -1,25 +1,45 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
-import '../../styles/Navbars.css';
+import Fuse from 'fuse.js';
 import { FaBell } from 'react-icons/fa';
 import Dropdowns from '../dropdown/Dropdowns';
-import { searchMovies } from '../../fuzzy.js';
 import { Link } from "react-router";
+import { AppContext } from '../../store/AppProvider.jsx';
+import { clearSearchShows, searchShows } from '../../store/actions/shows.js';
+import { getGenres } from '../../shared/services/shows.js';
+import { useQuery } from '@tanstack/react-query';
+import '../../styles/Navbars.css';
 
-const Navbars = (props) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  console.log(props);
-  
-  const [searchResults, setSearchResults] = useState([]);
-
+const Navbars = () => {
+  const appCtx = useContext(AppContext);
+  const { shows } = appCtx;
+  const { isPending: isGenreLoading, error: genreError, data: genres } = useQuery({
+    queryFn: getGenres,
+  });  
   const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    if (value.trim()) {
-      setSearchResults(searchMovies(value));
-    } else {
-      setSearchResults([]);
+    const value = e.target.value.trim();
+    if (!value) {
+      clearSearchShows(shows.dispatch);
+      return;
     }
+    const fuseMovieOptions = {
+      includeScore: true,
+      threshold: 0.4,
+      keys: ['title'],
+    };
+    const fuseTvShowsOptions = {
+      includeScore: true,
+      threshold: 0.4,
+      keys: ['original_name'],
+    };
+    const fuseMovieInstance = new Fuse([...shows.state.movies.results], fuseMovieOptions);
+    const fuseTvshowsInstance = new Fuse([...shows.state.tvShows.results], fuseTvShowsOptions);
+    const searchMovieResults = [...fuseMovieInstance.search(value).map(result => result.item)];
+    const searchTvShowsResults = [...fuseTvshowsInstance.search(value).map(result => result.item)];
+    searchShows({
+      movies: [...searchMovieResults],
+      tvShows: [...searchTvShowsResults]
+    }, shows.dispatch);
   };
 
   return (
@@ -45,13 +65,13 @@ const Navbars = (props) => {
             <Offcanvas.Body>
               <div className="navbar-left d-flex align-items-center gap-3 flex-grow-1">
                 <Nav className="me-auto d-flex align-items-center gap-2">
-                  
-                    <Link to='/' className="nav-link">
-                  Home
-                </Link>
-                 
+
+                  <Link to='/' className="nav-link">
+                    Home
+                  </Link>
+
                   <Nav.Link href="#" className="nav-link">
-                    <Dropdowns />
+                    <Dropdowns data={genres}/>
                   </Nav.Link>
                 </Nav>
               </div>
@@ -61,35 +81,13 @@ const Navbars = (props) => {
                   type="text"
                   placeholder="Search..."
                   aria-label="Search"
-                  value={searchTerm}
+                  // value={searchTerm}
                   onChange={handleSearch}
                 />
                 <FaBell className="text-white cursor-pointer position-relative" style={{ fontSize: '1.2rem' }}>
                   <span className="notification-badge">3</span>
                 </FaBell>
                 <img src="/profile.jpg" alt="Profile" className="profile-icon" />
-                {/* Fuzzy search results dropdown */}
-                {searchTerm && searchResults.length > 0 && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '110%',
-                    right: 0,
-                    left: 0,
-                    background: '#181818',
-                    color: '#fff',
-                    border: '1px solid #333',
-                    borderRadius: 4,
-                    zIndex: 2000,
-                    maxHeight: 220,
-                    overflowY: 'auto',
-                  }}>
-                    {searchResults.map((movie, idx) => (
-                      <div key={idx} style={{ padding: '8px 16px', borderBottom: '1px solid #222', cursor: 'pointer' }}>
-                        {movie.title} <span style={{ color: '#b3b3b3', fontSize: '0.9em' }}>({movie.year})</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

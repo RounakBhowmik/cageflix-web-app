@@ -6,17 +6,17 @@ import Home from "../pages/home/Home";
 import DetailsPage from "../pages/detailsShow/DetailsPage";
 
 const AppRoutes = () => {
-  const authRoutes = [
-    {
-      name: "Signin",
-      path: "/signin",
-      element: <Signin />,
-    },
-    {
-      name: "Signup",
-      path: "/signup",
-      element: <Signup />,
-    },
+  const routes = [
+    // {
+    //   name: "Signin",
+    //   path: "/signin",
+    //   element: <Signin />,
+    // },
+    // {
+    //   name: "Signup",
+    //   path: "/signup",
+    //   element: <Signup />,
+    // },
     {
       name: "Home",
       path: "/",
@@ -31,7 +31,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {authRoutes.map((ele, key) => (
+        {rotes.map((ele, key) => (
           <Route
             path={ele.path}
             element={<Layout>{ele.element}</Layout>}

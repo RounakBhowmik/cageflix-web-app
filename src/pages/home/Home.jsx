@@ -1,34 +1,48 @@
-import React from "react";
+import { useContext, useEffect } from "react";
 import TopCarousel from "../../components/carousel/TopCarousel";
 import MiddleCarousel from "../../components/carousel/MiddleCarousel";
-import { useQuery} from '@tanstack/react-query';
-import { getPopularMovies } from "../../shared/services/movies";
-import { getPopularTvShows } from "../../shared/services/tvshows";
+import { useQuery } from '@tanstack/react-query';
 import Loader from "../../components/commonLoader/Loader";
+import { getPopularMovies, getPopularTvShows } from "../../shared/services/shows";
+import { fetchShows } from "../../store/actions/shows";
+import { AppContext } from "../../store/AppProvider";
 
 const Home = () => {
- const { isPending: isMoviesLoading, error: moviesError, data: movies } = useQuery({
-  queryKey: ['popularMovies'],
-  queryFn: getPopularMovies,
-});
+  const appCtx = useContext(AppContext);
+  const { shows } = appCtx;
+  const { isPending: isMoviesLoading, error: moviesError, data: movies, refetch: moviesRefetch } = useQuery({
+    queryKey: ['popularMovies', shows?.state?.genre?.value],
+    queryFn: async () => { return await getPopularMovies(shows?.state?.genre?.value  && { with_genres: shows?.state?.genre?.value }) },
+  });
 
-const { isPending: isTvLoading, error: tvError, data: tvshows } = useQuery({
-  queryKey: ['popularTvShows'],
-  queryFn: getPopularTvShows,
-});
+  const { isPending: isTvLoading, error: tvError, data: tvShows, refetch: tvShowsRefetch } = useQuery({
+    queryKey: ['popularTvShows', shows?.state?.genre?.value],
+    queryFn: async () => { 
+      return await getPopularTvShows(shows?.state?.genre?.value  && { with_genres: shows?.state?.genre?.value })
+    },
+  });
 
-  if (isMoviesLoading || isTvLoading) return <Loader /> ;
+  useEffect(() => {    
+    fetchShows({ movies, tvShows }, shows.dispatch);
+  }, [movies, tvShows]);
 
-  if (moviesError) return 'An error has occurred: ' + moviesError.message;
-  if (tvError) return 'An error has occurred: ' + tvError.message;
+  if (isMoviesLoading || isTvLoading) {
+    return <Loader />;
+  }
 
-  // console.log("movies",movies);
-  // console.log("tvshows",tvshows);
-  return <div>
-    <TopCarousel movies={movies} tvshows={tvshows}/>
-    <MiddleCarousel  movies={movies} tvshows={tvshows} />
-    
-  </div>;
-  };
+  if (shows.state.isSearch) {
+    return (
+      <div>
+        <MiddleCarousel movies={shows?.state?.searchData?.movies} tvShows={shows?.state?.searchData?.tvShows} />
+      </div>
+    )
+  }
+  return (
+    <div>
+      <TopCarousel movies={movies} tvshows={tvShows} />
+      <MiddleCarousel movies={movies?.results} tvShows={tvShows?.results} />
+    </div>
+  );
+};
 
 export default Home;

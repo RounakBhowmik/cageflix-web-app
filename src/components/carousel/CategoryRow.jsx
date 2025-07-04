@@ -41,28 +41,31 @@ const CategoryRow = ({ title, data, onClick }) => {
     ],
   };
 
-  return (
-    <div className="category-row">
-      <h4 className="category-title">{title}</h4>
-      <Slider {...settings} className="carousel-slider">
-        {data.map((item, index) => (
-          <div
-            className="thumbnail"
-            key={index}
-            onClick={() => onClick(item)}
-            style={{ cursor: "pointer" }}
-          >
-            <img
-              src={"https://image.tmdb.org/t/p/w500" + item.poster_path}
-              alt={`thumb-${index}`}
-              className="thumbnail-img"
-            />
-            {item.tag && <span className="tag-label">{item.tag}</span>}
-          </div>
-        ))}
-      </Slider>
-    </div>
-  );
+  if (data.length > 0) {
+    return (
+      <div className="category-row">
+        <h4 className="category-title">{title}</h4>
+        <Slider {...settings} className="carousel-slider">
+          {data.map((item, index) => (
+            <div
+              className="thumbnail"
+              key={index}
+              onClick={() => onClick(item)}
+              style={{ cursor: "pointer" }}
+            >
+              <img
+                src={"https://image.tmdb.org/t/p/w500" + item.poster_path}
+                alt={`thumb-${index}`}
+                className="thumbnail-img"
+              />
+              {item.tag && <span className="tag-label">{item.tag}</span>}
+            </div>
+          ))}
+        </Slider>
+      </div>
+    );
+  }
+  return null;
 };
 
 export default CategoryRow;

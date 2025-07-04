@@ -1,4 +1,4 @@
-import React from "react";
+import { isEmpty } from "lodash";
 import CategoryRow from "./CategoryRow.jsx";
 import { useNavigate } from "react-router";
 
@@ -14,16 +14,25 @@ const MiddleCarousel = (props) => {
       state: { movie: { ...details } },
     });
   };
+  if (isEmpty(props.movies) && isEmpty(props.tvShows)) {
+    return (
+      <div>
+        <p>No Shows Found</p>
+      </div>
+    )
+  }
+  console.log(props);
+
   return (
     <div>
       <CategoryRow
         title="Movies"
-        data={props.movies?.results || []}
+        data={props.movies || []}
         onClick={onMovieDetails}
       />
       <CategoryRow
         title="Tv Shows"
-        data={props.tvshows?.results || []}
+        data={props.tvShows || []}
         onClick={onTvShowDetails}
       />
     </div>
