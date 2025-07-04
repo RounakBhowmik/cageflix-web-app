@@ -31,7 +31,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {rotes.map((ele, key) => (
+        {routes.map((ele, key) => (
           <Route
             path={ele.path}
             element={<Layout>{ele.element}</Layout>}
