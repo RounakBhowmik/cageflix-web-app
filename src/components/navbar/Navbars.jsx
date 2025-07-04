@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
 import Fuse from 'fuse.js';
 import { FaBell } from 'react-icons/fa';
 import Dropdowns from '../dropdown/Dropdowns';
 import { Link } from "react-router";
 import { AppContext } from '../../store/AppProvider.jsx';
-import { clearSearchShows, searchShows } from '../../store/actions/shows.js';
+import { clearSearchShows, fetchGenres, searchShows } from '../../store/actions/shows.js';
 import { getGenres } from '../../shared/services/shows.js';
 import { useQuery } from '@tanstack/react-query';
 import '../../styles/Navbars.css';
@@ -14,8 +14,18 @@ const Navbars = () => {
   const appCtx = useContext(AppContext);
   const { shows } = appCtx;
   const { isPending: isGenreLoading, error: genreError, data: genres } = useQuery({
+
     queryFn: getGenres,
-  });  
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (genres) {
+      fetchGenres([...genres?.genres.slice(0, 4)], shows.dispatch);
+    }
+  }, [genres]);
+
+
   const handleSearch = (e) => {
     const value = e.target.value.trim();
     if (!value) {
@@ -27,19 +37,25 @@ const Navbars = () => {
       threshold: 0.4,
       keys: ['title'],
     };
-    const fuseTvShowsOptions = {
-      includeScore: true,
-      threshold: 0.4,
-      keys: ['original_name'],
-    };
-    const fuseMovieInstance = new Fuse([...shows.state.movies.results], fuseMovieOptions);
-    const fuseTvshowsInstance = new Fuse([...shows.state.tvShows.results], fuseTvShowsOptions);
+    // const fuseTvShowsOptions = {
+    //   includeScore: true,
+    //   threshold: 0.4,
+    //   keys: ['original_name'],
+    // };
+    let fuseMovieInstance;
+    if (shows?.state?.isSearch) {
+      fuseMovieInstance = new Fuse([...shows?.state?.searchData.movies], fuseMovieOptions)
+    } else {
+      const mergedMovies = shows?.state?.movies.flatMap(ele => ele.results);
+      const uniqueMovies = Array.from(
+        new Map(mergedMovies.map(movie => [movie.id, movie])).values()
+      );
+      fuseMovieInstance = new Fuse([...uniqueMovies], fuseMovieOptions)
+    }
+    // const fuseTvshowsInstance = new Fuse([...shows.state.tvShows.results], fuseTvShowsOptions);
     const searchMovieResults = [...fuseMovieInstance.search(value).map(result => result.item)];
-    const searchTvShowsResults = [...fuseTvshowsInstance.search(value).map(result => result.item)];
-    searchShows({
-      movies: [...searchMovieResults],
-      tvShows: [...searchTvShowsResults]
-    }, shows.dispatch);
+    // const searchTvShowsResults = [...fuseTvshowsInstance.search(value).map(result => result.item)];
+    searchShows(searchMovieResults, shows.dispatch);
   };
 
   return (
@@ -71,7 +87,7 @@ const Navbars = () => {
                   </Link>
 
                   <Nav.Link href="#" className="nav-link">
-                    <Dropdowns data={genres}/>
+                    <Dropdowns data={genres} />
                   </Nav.Link>
                 </Nav>
               </div>

@@ -45,23 +45,39 @@ const CategoryRow = ({ title, data, onClick }) => {
     return (
       <div className="category-row">
         <h4 className="category-title">{title}</h4>
-        <Slider {...settings} className="carousel-slider">
-          {data.map((item, index) => (
-            <div
-              className="thumbnail"
-              key={index}
-              onClick={() => onClick(item)}
-              style={{ cursor: "pointer" }}
-            >
-              <img
-                src={"https://image.tmdb.org/t/p/w500" + item.poster_path}
-                alt={`thumb-${index}`}
-                className="thumbnail-img"
-              />
-              {item.tag && <span className="tag-label">{item.tag}</span>}
-            </div>
-          ))}
-        </Slider>
+        {
+          data.length > 1 ?
+            (<Slider {...settings} className="carousel-slider">
+              {data.map((item, index) => (
+                <div
+                  className="thumbnail"
+                  key={index}
+                  onClick={() => onClick(item)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={"https://image.tmdb.org/t/p/w500" + item.poster_path}
+                    alt={`thumb-${index}`}
+                    className="thumbnail-img"
+                  />
+                  {item.tag && <span className="tag-label">{item.tag}</span>}
+                </div>
+              ))}
+            </Slider>)
+            : (
+              <div
+                className="thumbnail"
+                onClick={() => onClick(data[0])}
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src={"https://image.tmdb.org/t/p/w500" + data[0].poster_path}
+                  className="thumbnail-img"
+                />
+                {data[0].tag && <span className="tag-label">{data[0].tag}</span>}
+              </div>
+            )
+        }
       </div>
     );
   }

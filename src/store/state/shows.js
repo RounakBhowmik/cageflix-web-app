@@ -6,6 +6,7 @@ export const showsIntialState = {
         movies: [],
         tvShows: []
     },
+    genres: [],
     genre: {
         name: "",
         value: -1

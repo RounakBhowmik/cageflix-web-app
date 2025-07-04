@@ -1,9 +1,9 @@
-import { CLEAR_SEARCH_SHOWS, FETCH_SHOWS, FETCH_SHOWS_BY_GENRE, SEARCH_SHOWS } from "../actionTypes";
+import { CLEAR_SEARCH_SHOWS, FETCH_GENRES, FETCH_SHOWS, FETCH_SHOWS_BY_GENRE, SEARCH_SHOWS } from "../actionTypes";
 
 export const showsReducer = (state, action) => {
     const { type, payload } = action;
     switch (type) {
-        case FETCH_SHOWS: {
+        case FETCH_SHOWS: {                 
             return {
                 ...state,
                 ...payload
@@ -28,10 +28,17 @@ export const showsReducer = (state, action) => {
                 }
             };
         }
-         case FETCH_SHOWS_BY_GENRE: {            
+        case FETCH_GENRES: {            
             return {
                 ...state,
-                genre: {...payload}
+                genres: [...payload]
+            };
+        }
+         case FETCH_SHOWS_BY_GENRE: {                        
+            return {
+                ...state,
+                genre: {...payload},
+                isSearch: true
             };
         }
         default: {

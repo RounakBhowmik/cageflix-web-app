@@ -2,14 +2,19 @@ import { isEmpty, isUndefined } from "lodash";
 import { useContext, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { AppContext } from "../../store/AppProvider";
-import { fetchShowsByGenre } from "../../store/actions/shows";
+import { clearSearchShows, fetchShowsByGenre } from "../../store/actions/shows";
 
 const Dropdowns = ({ data }) => {
   const appCtx = useContext(AppContext);
   const { shows } = appCtx;
   const [selectedGenre, setSelectedGenre] = useState("Genres");
-  const onGenreSelect = (id) => {
-    fetchShowsByGenre({ name: selectedGenre, value: id }, shows.dispatch);
+  const onGenreSelect = (e) => {
+    const { name, id } = JSON.parse(e)
+    if (id == -1) {
+      clearSearchShows(shows.dispatch);
+      return;
+    }
+    fetchShowsByGenre({ name: name, value: id }, shows.dispatch);
   }
   return (
     <div>
@@ -49,7 +54,7 @@ const Dropdowns = ({ data }) => {
                   padding: "4px 10px",
                   margin: 0,
                 }}
-                eventKey={-1}
+                eventKey={JSON.stringify({ name: "Genres", id: -1 })}
                 onClick={() => setSelectedGenre("Genres")}
               >
                 Genres
@@ -62,7 +67,7 @@ const Dropdowns = ({ data }) => {
                       padding: "4px 10px",
                       margin: 0,
                     }}
-                    eventKey={ele.id}
+                    eventKey={JSON.stringify({ name: ele.name, id: ele.id })}
                     key={key}
                     onClick={() => setSelectedGenre(ele.name)}
                   >
