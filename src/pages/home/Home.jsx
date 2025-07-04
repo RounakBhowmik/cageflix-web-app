@@ -12,13 +12,19 @@ const Home = () => {
   const appCtx = useContext(AppContext);
   const { shows } = appCtx;
   const { data: genresMovies, refetch: genresMoviesRefetch, isPending: genresMoviesLoading } = useQuery({
-    queryKey: ['popularMovies', shows?.state?.genre?.value],
+    queryKey: ['movies', shows?.state?.genre?.value],
     queryFn: async () => {
       if (shows?.state?.genre?.value != -1) {
         return await getMoviesByGenre({ with_genres: shows?.state?.genre?.value })
       }
     },
     enabled: false
+  });
+    const { data: populerMovies, refetch: populerMoviesMoviesRefetch, isPending: populerMoviesLoading } = useQuery({
+    queryKey: ['popularMovies'],
+    queryFn: async () => {
+        return await getPopularMovies();
+    },
   });
   const movies = useQueries({
     queries: shows?.state?.genres?.slice(0, 4).map((ele) => ({
@@ -66,7 +72,7 @@ const Home = () => {
   
   return (
     <div>
-      <TopCarousel movies={movies} />
+      <TopCarousel movies={populerMovies} />
       <MiddleCarousel movies={movies} genres={shows?.state.genres} />
     </div>
   );
