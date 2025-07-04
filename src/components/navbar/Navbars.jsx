@@ -63,7 +63,7 @@ const Navbars = () => {
       <Navbar expand="lg" className="netflix-navbar fixed-top" variant="dark">
         <Container fluid>
           <Navbar.Brand href="#" className="text-danger fw-bold">
-            <Link to='/' className="nav-link">
+            <Link to='/' className="text-danger fw-bold">
                     CAGEFLIX
                   </Link>
           </Navbar.Brand>
@@ -78,7 +78,7 @@ const Navbars = () => {
             <Offcanvas.Header closeButton className="text-white border-bottom border-secondary">
               <Offcanvas.Title id="navbar-label" className="text-danger fw-bold">
           
-                <Link to='/' className="nav-link">
+                <Link to='/' className="nav-link text-danger fw-bold">
                     CAGEFLIX
                   </Link>
               </Offcanvas.Title>

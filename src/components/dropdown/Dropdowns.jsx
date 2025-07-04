@@ -48,6 +48,19 @@ const Dropdowns = ({ data }) => {
         >
           <div style={{ display: "flex", gap: "6px", minWidth: "180px" }}>
             <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              <Dropdown.Item
+                style={{
+                  color: "#fff",
+                  padding: "4px 10px",
+                  margin: 0,
+                  background: "#181818"
+                }}
+                eventKey={JSON.stringify({ name: "Genres", id: -1 })}
+                onClick={() => setSelectedGenre("Genres")}
+                className="custom-dropdown-item"
+              >
+                Genres
+              </Dropdown.Item>
               {data != undefined && data.genres.slice(0, 4).map((ele, key) => (
                 <Dropdown.Item
                   style={{
@@ -64,19 +77,7 @@ const Dropdowns = ({ data }) => {
                   {ele.name}
                 </Dropdown.Item>
               ))}
-              <Dropdown.Item
-                style={{
-                  color: "#fff",
-                  padding: "4px 10px",
-                  margin: 0,
-                  background: "#181818"
-                }}
-                eventKey={JSON.stringify({ name: "Genres", id: -1 })}
-                onClick={() => setSelectedGenre("Genres")}
-                className="custom-dropdown-item"
-              >
-                Genres
-              </Dropdown.Item>
+              
             </div>
           </div>
         </Dropdown.Menu>
