@@ -20,10 +20,10 @@ const Home = () => {
     },
     enabled: false
   });
-    const { data: populerMovies, refetch: populerMoviesMoviesRefetch, isPending: populerMoviesLoading } = useQuery({
+  const { data: populerMovies, refetch: populerMoviesMoviesRefetch, isPending: populerMoviesLoading } = useQuery({
     queryKey: ['popularMovies'],
     queryFn: async () => {
-        return await getPopularMovies();
+      return await getPopularMovies();
     },
   });
   const movies = useQueries({
@@ -60,7 +60,7 @@ const Home = () => {
   }, [shows?.state?.genre?.value]);
 
   useEffect(() => {
-    if (genresMovies ) {
+    if (genresMovies) {
       searchShows([...genresMovies?.results], shows.dispatch);
     }
   }, [genresMovies]);
@@ -69,7 +69,13 @@ const Home = () => {
     return <Loader />;
   }
 
-  
+  if (shows?.state?.isSearch) {
+    return (
+      <div>
+        <MiddleCarousel movies={movies} genres={shows?.state.genres} />
+      </div>
+    )
+  }
   return (
     <div>
       <TopCarousel movies={populerMovies} />
