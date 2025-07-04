@@ -21,7 +21,6 @@ const MiddleCarousel = (props) => {
       </div>
     )
   }
-  console.log(props);
 
   return (
     <div>
